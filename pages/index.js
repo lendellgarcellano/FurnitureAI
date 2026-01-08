@@ -10,6 +10,7 @@ export default function Home() {
     setLoading(true);
     const res = await fetch(`/api/search?query=${query}`);
     const data = await res.json();
+    setItems(Array.isArray(data) ? data : []);
     setItems(data);
     setLoading(false);
   };
@@ -32,7 +33,7 @@ export default function Home() {
       {loading && <p>Loading...</p>}
 
       <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(250px, 1fr))", gap: 20, marginTop: 30 }}>
-        {items.map((item, i) => (
+        {Array.isArray(items) && items.map((item, i) => (
           <div key={i} style={{ border: "1px solid #ddd", borderRadius: 8, padding: 15 }}>
             <img src={item.image} alt="" style={{ width: "100%", height: 180, objectFit: "cover" }} />
             <h3>{item.title}</h3>
